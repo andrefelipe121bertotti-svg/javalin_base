@@ -1,6 +1,7 @@
 package br.edu.ifpr.pgua.eic.tads;
 
 import br.edu.ifpr.pgua.eic.tads.controllers.IndexController;
+import br.edu.ifpr.pgua.eic.tads.controllers.cadastrocotrolelr;
 import br.edu.ifpr.pgua.eic.tads.utils.JavalinUtils;
 
 /**
@@ -12,9 +13,10 @@ public class App {
         var app = JavalinUtils.makeApp(8090);
 
          IndexController indexController = new IndexController();
+         cadastrocotrolelr cadastrocotrolelr = new cadastrocotrolelr();
 
         
-        app.get("/",indexController::(get));
+        app.get("/", indexController::QuartoThif);
         app.get("/teste",ctx->{ctx.result("Testando, testando, vc congueme ouvir... digo ler?");});
         app.get("/bem_vindo",ctx->{ctx.result("BEM-VINDO, caro espequitador. Eu sou Thiffany e serei sua anfitria.");});
         app.get("/bem_vindoV2",ctx->{ctx.result("duplicada~");});
