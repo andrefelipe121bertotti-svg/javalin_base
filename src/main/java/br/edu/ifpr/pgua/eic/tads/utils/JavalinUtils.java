@@ -1,10 +1,5 @@
 package br.edu.ifpr.pgua.eic.tads.utils;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.StringWriter;
-import java.util.Map;
-
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
@@ -19,7 +14,7 @@ public class JavalinUtils {
 
         Javalin app = Javalin.create(config->{
             ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
-            templateResolver.setPrefix("/public/"); 
+            templateResolver.setPrefix("/templates/"); 
             templateResolver.setSuffix(".html");       
             templateResolver.setTemplateMode("HTML");
             templateResolver.setCharacterEncoding("UTF-8");
