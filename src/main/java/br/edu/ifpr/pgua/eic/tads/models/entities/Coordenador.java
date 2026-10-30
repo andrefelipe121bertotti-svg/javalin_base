@@ -4,11 +4,11 @@ public class Coordenador extends Funcionario{
     
     private double adicional;
 
-    public Coordenador(String nome, String email,
+    public Coordenador(Int Id, String nome, String email,
                        String cpf, double salario,
                        String cargo, String turno, double adicional){
         
-        super(nome,email,cpf,salario,cargo,turno);
+        super(Id, nome,email,cpf,salario,cargo,turno);
 
         this.adicional = adicional;
     }

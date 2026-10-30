@@ -7,28 +7,17 @@ public class Funcionario extends Pessoa {
     private String cargo;
     private String turno;
     
-    public Funcionario(String nome, String email,
+    public Funcionario( int Id, String nome, String email,
                        String cpf, double salario,
                        String cargo, String turno){
 
-        super(nome,email,cpf);
+        super(Id, nome,email,cpf);
 
         this.cargo = cargo;
         this.turno = turno;
         this.salario = salario;
     }
 
-    public Funcionario(String nome, String email,
-                       String cpf,String cargo, String turno){
-        
-        this(nome,email,cpf,0.0,cargo,turno);
-        /*this.nome = nome;
-        this.cpf = cpf;
-        this.email = email;
-        this.turno = turno;
-        this.cargo = cargo;*/
-
-    }
 
 
     public double getSalario() {

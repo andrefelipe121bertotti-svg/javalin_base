@@ -1,4 +1,9 @@
 package br.edu.ifpr.pgua.eic.tads.models;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import br.edu.ifpr.pgua.eic.tads.models.entities.Funcionario;
@@ -39,12 +44,28 @@ public class Restaurante {
     public boolean cadastrarUsuario(String nome, String email, 
                                     String telefone, String cpf){
         
-        if((buscarCpf(cpf)==null) && (buscarEmail(email)==null)){
-            Usuario u = new Usuario(cpf, nome, email, telefone, 0.0);
-            usuarios.add(u);
+        String url = "jdbc:sqlite:app.db";
+
+
+        try(Connection con=DriverManager.getConnection(url)){
+
+            String sql = "INSERT INTO oo_usuario(nome,cpf,telefone,email) VALUES (?,?,?,?)";
+
+            PreparedStatement pstm = con.prepareStatement(sql);
+
+            pstm.setString(1, nome);
+            pstm.setString(2,cpf);
+            pstm.setString(3, telefone);
+            pstm.setString(4, email);
+
+            int ret = pstm.executeUpdate();
             return true;
+
+
+        }catch(SQLException e){
+            e.printStackTrace();
+            return false;
         }
-        return false;
         
     }
 
@@ -58,12 +79,12 @@ public class Restaurante {
     }
 
 
-    public String cadastrarFuncionario(String nome, String email, String cpf,
+    public String cadastrarFuncionario(int ID, String nome, String email, String cpf,
                                        double salario, String cargo, String turno
     ){
 
         if(buscarFuncionarioCpf(cpf) == null){
-            Funcionario f = new Funcionario(nome, email, cpf,salario, cargo, turno);
+            Funcionario f = new Funcionario(Id, nome, email, cpf,salario, cargo, turno);
             funcionarios.add(f);
             return "Funcionário cadastrado!";
         }
@@ -122,7 +143,34 @@ public class Restaurante {
 
 
     public ArrayList<Usuario> getUsuarios(){
-        return usuarios;
+        ArrayList<Usuario> lista = new ArrayList<>();
+
+        String url = "jdbc:mysql:app.db";
+
+        try(Connection con=DriverManager.getConnection(url)){
+            String sql = "SELECT * FROM oo_usuario";
+
+            PreparedStatement pstm = con.prepareStatement(sql);
+
+            ResultSet rs = pstm.executeQuery();
+
+            while(rs.next()){
+                int id = rs.getInt("id");
+                String nome = rs.getString("nome");
+                String telefone = rs.getString("telefone");
+                String cpf = rs.getString("cpf");
+                String email = rs.getString("email");
+
+                Usuario u = new Usuario(id, nome, email, cpf, telefone);
+
+                 lista.add(u);
+            }
+
+                    return lista;
+        }catch(SQLException e){
+            System.out.println("Erro ao listar usuarios..."+e.getMessage());
+            return null;
+        }
     }
 
     public String listar(){

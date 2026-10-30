@@ -1,15 +1,21 @@
 package br.edu.ifpr.pgua.eic.tads.models.entities;
 
 public class Pessoa {
+    protected int Id;
     protected String nome;
     protected String email;
     protected String cpf;
 
-    public Pessoa(String nome, String email, String cpf) {
+
+
+    public Pessoa(int Id, String nome, String email, String cpf) {
+        this.Id = Id;
         this.nome = nome;
         this.email = email;
         this.cpf = cpf;
     }
+
+    
 
     public String getNome() {
         return nome;
@@ -34,6 +40,12 @@ public class Pessoa {
     @Override
     public String toString() {
         return "Pessoa [nome=" + nome + ", email=" + email + ", cpf=" + cpf + "]";
+    }
+
+
+
+    public int getId() {
+        return Id;
     }
     
     

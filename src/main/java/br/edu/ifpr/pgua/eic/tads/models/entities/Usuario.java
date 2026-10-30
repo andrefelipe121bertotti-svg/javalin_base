@@ -9,15 +9,13 @@ public final class Usuario extends Pessoa{
     
     private RegistroOperacoes movimentacoes;
 
-    public Usuario(String cpf, String pnome, String pemail, String ptelefone, double psaldo){
-        
-        super(pnome,pemail,cpf);
-
-        telefone = ptelefone;
-        saldo = psaldo;
-        
-        this.movimentacoes = new RegistroOperacoes();
+    public Usuario(int id, String nome, String email, String cpf, String telefone) {
+        super(id, nome, email, cpf);
+        this.telefone = telefone;
+        this.saldo = saldo;
     }
+
+
 
     public String getTelefone(){
         return telefone;
