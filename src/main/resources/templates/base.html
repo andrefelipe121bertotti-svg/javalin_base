@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="pt-br" th:fragment="layout(conteudo)">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/estilo.css">
+    <title>Document</title>
+</head>
+<body>
+    <header class="app-header">
+        <h1>Sistema de Restaurante</h1>
+        <nav class="app-nav">
+            <ul>
+                <li><a href="/">Início</a></li>
+                <li><a href="/usuarios/cadastro">Cadastro de Usuários</a></li>
+                <li><a href="/funcionarios/cadastro">Cadastro de Funcionários</a></li>
+            </ul>
+        </nav>
+    </header>
+    <main class="container" th:replace="${conteudo}">
+
+    </main>
+    <footer class="app-footer">
+         <p>&copy; 2026 - Sistema de Restaurante</p>
+    </footer>
+</body>
+</html>

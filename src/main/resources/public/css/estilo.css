@@ -1,10 +1,233 @@
-body {
-    background-color: powderblue;
-    margin: auto;
-    text-align: center;
-    align-items: center;
-    
+/* ==========================================================================
+   1. VARIÁVEIS GLOBAIS E CONFIGURAÇÕES INICIAIS (ESCOPO GLOBAL)
+   ========================================================================== */
+
+/* 
+   :root funciona como uma "classe de constantes estáticas" globais. 
+   Centraliza o design system (cores, espaçamentos, bordas). Alterar um valor
+   aqui atualiza a interface inteira automaticamente.
+*/
+:root {
+    --primary-color: #1e3a8a;  /* Azul escuro (cor principal da marca) */
+    --primary-hover: #1d4ed8;  /* Azul mais claro (para estados de foco/hover) */
+    --bg-color: #dfe1e4;       /* Cinza claro para o fundo da página */
+    --card-bg: #ffffff;        /* Fundo branco para os contêineres de conteúdo */
+    --text-color: #334155;     /* Grafite escuro (melhor contraste e leitura que preto puro) */
+    --border-color: #e2e8f0;   /* Cor neutra para linhas de tabela e divisores */
+    --radius: 6px;             /* Arredondamento padrão para botões e inputs */
 }
-h1 {
-    color: blue;
+
+/* 
+   Seletor Universal (*): Zera margens e paddings padrão de todos os navegadores.
+   box-sizing: border-box faz com que bordas e paddings NÃO aumentem a largura 
+   total do elemento (facilitando o cálculo de layout).
+*/
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+/* ==========================================================================
+   2. ESTRUTURA BASE DA PÁGINA (CORPO)
+   ========================================================================== */
+
+body {
+    /* Pilha de fontes nativas: usa a fonte padrão do SO sem carregar arquivos externos */
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: var(--bg-color);
+    color: var(--text-color);
+    line-height: 1.6;          /* Altura da linha (melhora a legibilidade) */
+    
+    /* Sticky Footer com Flexbox: força o rodapé a ficar sempre no fim da tela */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;         /* Opcionalmente ocupa 100% da altura da janela visível */
+}
+
+/* ==========================================================================
+   3. CABEÇALHO E NAVEGAÇÃO
+   ========================================================================== */
+
+/* Barra de navegação principal superior */
+.app-header {
+    background-color: var(--primary-color);
+    color: white;
+    padding: 1rem 2rem;
+    display: flex;
+    justify-content: space-between; /* Título à esquerda, menu à direita */
+    align-items: center;            /* Alinha verticalmente os itens ao centro */
+}
+
+/* Transforma a lista desordenada (<ul>) em um menu horizontal */
+.app-nav ul {
+    display: flex;
+    list-style: none; /* Remove os marcadores/bolinhas padrão da lista */
+    gap: 1rem;        /* Espaçamento moderno e fixo entre os links */
+}
+
+/* Estilização padrão dos links do menu */
+.app-nav a {
+    color: #cbd5e1;
+    text-decoration: none; /* Remove o sublinhado padrão do link */
+    padding: 0.5rem 1rem;
+    border-radius: var(--radius);
+    transition: background-color 0.2s; /* Transição suave ao passar o mouse */
+}
+
+/* Estado de hover (mouse sobre) e estado ativo (página atual) */
+.app-nav a:hover, 
+.app-nav a.active {
+    background-color: rgba(255, 255, 255, 0.15); /* Fundo branco semitransparente */
+}
+
+/* ==========================================================================
+   4. LAYOUT PRINCIPAL E CARTÕES (CONTAINERS)
+   ========================================================================== */
+
+/* Contêiner central que limita a largura do conteúdo e dá margem */
+.container {
+    max-width: 900px;
+    width: 100%;
+    margin: 2rem auto; /* Centraliza horizontalmente na tela (auto) */
+    padding: 0 1rem;
+    flex: 1;           /* Expande para ocupar o espaço livre e empurrar o footer */
+}
+
+/* Conceito de "Card": Bloco de conteúdo destacado do fundo */
+.card {
+    background: var(--card-bg);
+    padding: 1.5rem;
+    border-radius: var(--radius);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.05); /* Sombra leve para dar profundidade */
+}
+
+.card h2 {
+    margin-bottom: 0.5rem;
+    color: var(--primary-color);
+}
+
+/* ==========================================================================
+   5. TABELAS DE DADOS
+   ========================================================================== */
+
+.data-table {
+    width: 100%;
+    border-collapse: collapse; /* Une as bordas das células (remove espaço duplo) */
+    margin-top: 1.5rem;
+}
+
+.data-table th, 
+.data-table td {
+    padding: 0.75rem 1rem;     /* Dá espaço interno às células */
+    text-align: left;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.data-table th {
+    background-color: #f1f5f9; /* Destaque cinza claro para o cabeçalho */
+    font-weight: 600;
+}
+
+/* Efeito visual ao passar o mouse por cima de uma linha da tabela */
+.data-table tbody tr:hover {
+    background-color: #f8fafc;
+}
+
+/* ==========================================================================
+   6. FORMULÁRIOS E CONTROLES DE ENTRADA
+   ========================================================================== */
+
+/* Disposição vertical do formulário inteiro */
+.form-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 1.2rem;
+    margin-top: 1rem;
+}
+
+/* Cada grupo representa um par <label> + <input> */
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+}
+
+.form-group label {
+    font-weight: 600;
+    font-size: 0.9rem;
+}
+
+.form-group input,
+.form-group select {
+    padding: 0.6rem;
+    border: 1px solid var(--border-color);
+    border-radius: var(--radius);
+    font-size: 1rem;
+}
+
+/* 
+   ATENÇÃO: Haviam dois detalhes de digitação no original que valem destacar:
+   1. '.from-group' estava escrito com erro de digitação (corrigido para .form-group).
+   2. As regras de :focus foram ajustadas para aplicar o contorno correto nos campos.
+*/
+.form-group input:focus, 
+.form-group select:focus {
+    outline: 2px solid var(--primary-hover); /* Destaque azul ao selecionar o campo */
+    border-color: transparent;
+}
+
+/* ==========================================================================
+   7. BOTÕES E AÇÕES
+   ========================================================================== */
+
+.form-actions {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1rem;
+}
+
+/* Estilo base compartilhado por todos os tipos de botões (Herança/Reutilização) */
+.btn-primary,
+.btn-secondary,
+.btn-action {
+    display: inline-block;
+    padding: 0.6rem 1.2rem;
+    border-radius: var(--radius);
+    text-decoration: none;
+    font-size: 0.9rem;
+    cursor: pointer; /* Transforma o cursor em mãozinha ao passar por cima */
+    border: none;
+}
+
+/* Variação: Botão de ação principal (ex: Salvar/Enviar) */
+.btn-primary {
+    background-color: var(--primary-color);
+    color: white;
+}
+
+/* Variação: Botão secundário (ex: Cancelar/Voltar) */
+.btn-secondary {
+    background-color: #e2e8f0;
+    color: var(--text-color);
+}
+
+/* Variação: Botão para ações dentro de tabelas/listas (ex: Editar/Excluir) */
+.btn-action {
+    background-color: #f1f5f9;
+    color: var(--primary-color);
+    border: 1px solid var(--border-color);
+}
+
+/* ==========================================================================
+   8. RODAPÉ (FOOTER)
+   ========================================================================== */
+
+.app-footer {
+    text-align: center;
+    padding: 1rem;
+    background-color: #e2e8f0;
+    font-size: 0.85rem;
+    margin-top: auto; /* Garante o encaixe no final da tela em conjunto com o body Flexbox */
 }

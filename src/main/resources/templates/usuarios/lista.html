@@ -1,0 +1,27 @@
+<html th:replace="~{base :: layout(~{::main})}">
+    <body>
+        <main>
+            <section class="card">
+                <h2>Usuários Cadastrados</h2>
+                <table class="data-table">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>CPF</th>
+                            <th>E-mail</th>
+                            <th>Telefone</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr th:each="usuario : ${usuarios}">
+                            <td th:text="${usuario.nome}">Nome1</td>
+                            <td th:text="${usuario.cpf}">12345</td>
+                            <td th:text="${usuario.email}">email1@teste.com</td>
+                            <td th:text="${usuario.telefone}">123456</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </section>
+        </main>
+    </body>
+</html>

@@ -1,5 +1,10 @@
 package br.edu.ifpr.pgua.eic.tads.utils;
 
+import java.io.File;
+import java.io.IOException;
+import java.io.StringWriter;
+import java.util.Map;
+
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.templateresolver.ClassLoaderTemplateResolver;
 
