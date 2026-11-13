@@ -25,7 +25,7 @@ public class App {
 
 
     public static void main( String[] args ){
-        var app = JavalinUtils.makeApp(8090);
+        var app = JavalinUtils.makeApp(8100);
         
         Restaurante restaurante = new Restaurante();
         povoarUsuarios(restaurante);

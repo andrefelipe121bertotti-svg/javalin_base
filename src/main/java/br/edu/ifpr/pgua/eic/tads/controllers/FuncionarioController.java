@@ -24,7 +24,7 @@ public class FuncionarioController {
         String turno = ctx.formParam("turno");
         String cargo = ctx.formParam("cargo");
 
-        String ret = restaurante.cadastrarFuncionario(nome, email, cpf, salario, cargo, turno);
+        String ret = restaurante.cadastrarFuncionario( nome, email, cpf, salario, cargo, turno);
 
         ctx.result(ret);
     }

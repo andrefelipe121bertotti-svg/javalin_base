@@ -4,7 +4,7 @@ public class Coordenador extends Funcionario{
     
     private double adicional;
 
-    public Coordenador(Int Id, String nome, String email,
+    public Coordenador( int Id, String nome, String email,
                        String cpf, double salario,
                        String cargo, String turno, double adicional){
         

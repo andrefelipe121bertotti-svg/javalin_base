@@ -44,10 +44,10 @@ public class Restaurante {
     public boolean cadastrarUsuario(String nome, String email, 
                                     String telefone, String cpf){
         
-        String url = "jdbc:sqlite:app.db";
+       
 
 
-        try(Connection con=DriverManager.getConnection(url)){
+        try(Connection con=FabricaConexoes.getInstance().getConnection()){
 
             String sql = "INSERT INTO oo_usuario(nome,cpf,telefone,email) VALUES (?,?,?,?)";
 
@@ -79,16 +79,26 @@ public class Restaurante {
     }
 
 
-    public String cadastrarFuncionario(int ID, String nome, String email, String cpf,
-                                       double salario, String cargo, String turno
-    ){
+    public String cadastrarFuncionario( String nome, String email, String cpf,
+                                       double salario, String cargo, String turno){
+        try(Connection con=FabricaConexoes.getInstance().getConnection()){
+            String sql = "INSERT INTO oo_funcionario(nome,email, cpf, salario, cargo, turno) VALUES (?,?,?,?,?,?)";
 
-        if(buscarFuncionarioCpf(cpf) == null){
-            Funcionario f = new Funcionario(Id, nome, email, cpf,salario, cargo, turno);
-            funcionarios.add(f);
-            return "Funcionário cadastrado!";
+            PreparedStatement pstm = con.prepareStatement(sql);
+            pstm.setString(1, nome);
+            pstm.setString(2, email);
+            pstm.setString(3,cpf);
+            pstm.setDouble(4, salario);
+            pstm.setString(5, cargo);
+            pstm.setString(6, turno);
+
+            int ret = pstm.executeUpdate();
+            return "true";
+
+        }catch(SQLException e){
+            e.printStackTrace();
+            return "false";
         }
-        return "Funcionário não cadastrado!";
     }
 
     public String listarFuncionarios(){
@@ -172,6 +182,34 @@ public class Restaurante {
             return null;
         }
     }
+
+    public ArrayList<Funcionario> getFuncionarios(){
+    ArrayList<Funcionario> lista = new ArrayList<>();
+
+    String url = "jdbc:sqlite:app.db";
+
+    try(Connection con = DriverManager.getConnection(url)){
+        PreparedStatement pstm = con.prepareStatement("SELECT * FROM oo_funcionario");
+        ResultSet rs = pstm.executeQuery();
+
+        while(rs.next()){
+            int id = rs.getInt("id");
+            String nome = rs.getString("nome");
+            String email = rs.getString("email");
+            String cpf = rs.getString("cpf");
+            double salario = rs.getDouble("salario");
+            String cargo = rs.getString("cargo");
+            String turno = rs.getString("turno");
+
+            lista.add(new Funcionario(id, nome, email, cpf, salario, cargo, turno));
+        }
+        return lista;
+
+    }catch(SQLException e){
+        System.out.println("Erro ao listar funcionarios..." + e.getMessage());
+        return null;
+    }
+}
 
     public String listar(){
 
