@@ -8,6 +8,8 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.github.hugoperlin.results.Resultado;
+
 import br.edu.ifpr.pgua.eic.tads.models.FabricaConexoes;
 import br.edu.ifpr.pgua.eic.tads.models.entities.Usuario;
 
@@ -21,19 +23,19 @@ public class UsuarioDaoImpl implements UsuarioDao{
 
 
     @Override
-    public Usuario atualizar(Usuario u) {
+    public Resultado<Usuario> atualizar(Usuario u) {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public Usuario buscarId(int id) {
+    public Resultado<Usuario> buscarId(int id) {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
-    public Usuario criar(Usuario u) {
+    public Resultado<Usuario> criar(Usuario u) {
         
         String sql = "INSERT INTO oo_usuario(nome,cpf,email,telefone) VALUES (?,?,?,?)";
 
@@ -47,17 +49,17 @@ public class UsuarioDaoImpl implements UsuarioDao{
 
             pstm.executeUpdate();
 
-            return u;
+            return Resultado.sucesso("Usuario cadastrado!", u);
 
         }catch(SQLException e){
             System.out.println(e.getMessage());
-            return null;
+            return Resultado.erro(e.getMessage());
         }
 
     }
 
     @Override
-    public List<Usuario> listar() {
+    public Resultado<List<Usuario>> listar() {
         ArrayList<Usuario> lista = new ArrayList<>();
 
         try(Connection con=fabrica.getConnection()){
@@ -88,7 +90,7 @@ public class UsuarioDaoImpl implements UsuarioDao{
     }
 
     @Override
-    public Usuario remover(int id) {
+    public Resultado<Usuario> remover(int id) {
         // TODO Auto-generated method stub
         return null;
     }
