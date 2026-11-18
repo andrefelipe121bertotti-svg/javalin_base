@@ -1,5 +1,7 @@
 package br.edu.ifpr.pgua.eic.tads.models.entities;
 
+import java.util.List;
+
 public final class Usuario extends Pessoa{
 
     //atributos
@@ -7,15 +9,26 @@ public final class Usuario extends Pessoa{
     private String telefone;
     private double saldo;
     
-    private RegistroOperacoes movimentacoes;
+    private List<Operacao> movimentacoes;
 
-    public Usuario(int Id, String nome, String email, String cpf, String telefone) {
-        super(Id, nome, email, cpf);
+    public Usuario(int id, String nome, String email, String cpf, String telefone) {
+        super(id, nome, email, cpf);
         this.telefone = telefone;
-        this.saldo = saldo;
+    }
+
+    public Usuario(int id, String cpf, String pnome, String pemail, String ptelefone, double psaldo){
+        
+        super(id,pnome,pemail,cpf);
+
+        telefone = ptelefone;
+        saldo = psaldo;
+        
     }
 
 
+    public void setMovimentacoes(List<Operacao> movimentacoes){
+        this.movimentacoes = movimentacoes;
+    }
 
     public String getTelefone(){
         return telefone;
@@ -24,7 +37,6 @@ public final class Usuario extends Pessoa{
     public boolean inserirCredito(double valor){
         if(valor > 0){
             saldo = saldo + valor;
-            movimentacoes.registrar("crédito", valor);
             return true;
         }
         return false;
@@ -38,15 +50,11 @@ public final class Usuario extends Pessoa{
     public boolean consumirRefeicao(double valor){
         if(valor > 0){
             saldo = saldo - valor;
-            movimentacoes.registrar("débito", valor);
             return true;
         }
         return false;
     }
 
-    public String gerarExtrato(){
-        return movimentacoes.listar();
-    }
 
     public String toString(){
         String str = "";
